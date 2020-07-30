@@ -10,5 +10,7 @@ namespace CentralDeErros.Data.Repository
         T GetById(int id);
 
         List<T> GetAll();
+
+        T Save(T entity);
     }
 }

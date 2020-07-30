@@ -1,4 +1,5 @@
 ﻿using CentralDeErros.Api.Data;
+using CentralDeErros.Api.Models;
 using CentralDeErros.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +26,13 @@ namespace CentralDeErros.Data.Repository
         T IBaseRepository<T>.GetById(int id)
         {
             return context.Set<T>().FirstOrDefault(item => item.Id == id);
+        }
+
+        T IBaseRepository<T>.Save(T entity)
+        {
+            context.Add(entity);
+            context.SaveChanges();
+            return entity;
         }
     }
 }

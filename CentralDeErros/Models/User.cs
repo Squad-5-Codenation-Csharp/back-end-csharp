@@ -16,7 +16,7 @@ namespace CentralDeErros.Api.Models
 
         public string Password{ get; set; }
 
-        public bool Status{ get; set; }
+        public bool Status { get; set; } = true;
 
         public DateTime RegisterDate { get; set; } = DateTime.Now;
 

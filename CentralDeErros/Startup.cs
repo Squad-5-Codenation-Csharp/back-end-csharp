@@ -11,6 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using CentralDeErros.Data.Repository;
+using CentralDeErros.Repositories;
+using CentralDeErros.Services;
+using CentralDeErros.Api.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CentralDeErros
 {
@@ -28,6 +33,11 @@ namespace CentralDeErros
         {
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddDbContext<CentralDeErrosApiContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("CentralDeErrosApiContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

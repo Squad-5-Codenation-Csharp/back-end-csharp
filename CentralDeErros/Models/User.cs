@@ -1,11 +1,12 @@
-﻿using System;
+﻿using CentralDeErros.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CentralDeErros.Api.Models
 {
-    public class User
+    public class User : IEntity
     {
         public int Id { get; set; }
 

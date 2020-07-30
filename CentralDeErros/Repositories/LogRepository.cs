@@ -4,7 +4,7 @@ using CentralDeErros.Data.Interfaces;
 
 namespace CentralDeErros.Data.Repository
 {
-    public class LogRepository : BaseRepository<Log>, ILogRepository
+    public class LogRepository : BaseRepository<Log> , ILogRepository
     {
         public LogRepository(CentralDeErrosApiContext context) : base(context)
         {

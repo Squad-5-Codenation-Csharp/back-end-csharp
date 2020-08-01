@@ -13,5 +13,7 @@ namespace CentralDeErros.Services
 
         public int Save(User user);
 
+        public void Update(User user);
+
     }
 }

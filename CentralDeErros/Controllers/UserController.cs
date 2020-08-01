@@ -41,5 +41,13 @@ namespace CentralDeErros.Controllers
 
             return Ok(UserId);
         }
+
+        [HttpPut]
+        public ActionResult Update([FromBody] UpdateUserRequestValidation user)
+        {
+            service.Update(mapper.Map<User>(user));
+
+            return NoContent();
+        }
     }
 }

@@ -12,5 +12,7 @@ namespace CentralDeErros.Data.Repository
         List<T> GetAll();
 
         T Save(T entity);
+
+        T Update(T entity);
     }
 }

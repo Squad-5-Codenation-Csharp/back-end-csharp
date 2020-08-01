@@ -30,5 +30,10 @@ namespace CentralDeErros.Services
             return createdUser.Id;
         }
 
+        public void Update(User user)
+        {
+            repository.Update(user);
+        }
+
     }
 }

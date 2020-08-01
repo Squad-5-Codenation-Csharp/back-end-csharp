@@ -34,5 +34,12 @@ namespace CentralDeErros.Data.Repository
             context.SaveChanges();
             return entity;
         }
+
+        T IBaseRepository<T>.Update(T entity)
+        {
+            context.Update(entity);
+            context.SaveChanges();
+            return entity;
+        }
     }
 }

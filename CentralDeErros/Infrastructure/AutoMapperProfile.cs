@@ -8,7 +8,7 @@ namespace CentralDeErros.Infrastructure
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserResponseModel, User>().ReverseMap();
+            CreateMap<User, UserResponseModel>().ReverseMap();
         }
     }
 }

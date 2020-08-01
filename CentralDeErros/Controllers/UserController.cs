@@ -21,6 +21,7 @@ namespace CentralDeErros.Controllers
         public UserController(IUserService service, IMapper mapper)
         {
             this.service = service;
+            this.mapper = mapper;
         }
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CentralDeErros.Api.Models;
+using CentralDeErros.RequestValidations;
 using CentralDeErros.ResponseModel;
 using CentralDeErros.Services;
 using Microsoft.AspNetCore.Http;
@@ -34,9 +35,9 @@ namespace CentralDeErros.Controllers
         }
 
         [HttpPost]
-        public ActionResult<int> Post([FromBody] User user)
+        public ActionResult<int> Post([FromBody] CreateUserRequestValidation user)
         {
-            var UserId = service.Save(user);
+            var UserId = service.Save(mapper.Map<User>(user));
 
             return Ok(UserId);
         }

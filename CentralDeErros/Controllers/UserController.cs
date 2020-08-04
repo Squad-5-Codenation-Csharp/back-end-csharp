@@ -27,12 +27,23 @@ namespace CentralDeErros.Controllers
 
 
         [HttpGet]
+
         public ActionResult<IList<UserResponseModel>> GetAll()
         {
             var UserList = service.GetAll();
 
             return Ok(mapper.Map<IList<UserResponseModel>>(UserList));
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<UserResponseModel> GetById(int id)
+        {
+            var user = service.GetById(id);
+
+            return Ok(mapper.Map<UserResponseModel>(user));
+        }
+
 
         [HttpPost]
         public ActionResult<int> Post([FromBody] CreateUserRequestValidation user)

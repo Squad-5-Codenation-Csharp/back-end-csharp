@@ -11,6 +11,8 @@ namespace CentralDeErros.Services
 
         public IList<User> GetAll();
 
+        public User GetById(int id);
+
         public int Save(User user);
 
         public void Update(User user);

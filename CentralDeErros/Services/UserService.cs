@@ -24,6 +24,13 @@ namespace CentralDeErros.Services
             return UserList;
         }
 
+        public User GetById(int id)
+        {
+            var user = repository.GetById(id);
+
+            return user;
+        }
+
         public int Save(User user)
         {
             var createdUser = repository.Save(user);

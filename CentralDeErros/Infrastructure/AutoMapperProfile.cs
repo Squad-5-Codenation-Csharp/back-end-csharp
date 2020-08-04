@@ -12,6 +12,8 @@ namespace CentralDeErros.Infrastructure
             CreateMap<User, UserResponseModel>().ReverseMap();
             CreateMap<CreateUserRequestValidation, User>().ReverseMap();
             CreateMap<UpdateUserRequestValidation, User>().ReverseMap();
+            CreateMap<Log, LogResponseModel>().ReverseMap();
+            CreateMap<CreateLogRequestValidation, Log>().ReverseMap();
         }
     }
 }

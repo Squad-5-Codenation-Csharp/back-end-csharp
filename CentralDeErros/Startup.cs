@@ -17,6 +17,7 @@ using CentralDeErros.Infrastructure;
 using CentralDeErros.Services;
 using CentralDeErros.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using CentralDeErros.Data.Interfaces;
 
 namespace CentralDeErros
 {
@@ -36,6 +37,8 @@ namespace CentralDeErros
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ILogService, LogService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<CentralDeErrosApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CentralDeErrosApiContext")));

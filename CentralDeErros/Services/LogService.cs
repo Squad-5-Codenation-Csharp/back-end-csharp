@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CentralDeErros.Services
 {
-    public class LogService
+    public class LogService : ILogService
     {
         private readonly ILogRepository repository;
 

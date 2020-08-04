@@ -18,7 +18,7 @@ namespace CentralDeErros.Api.Models
 
         public string Type { get; set; }
 
-        public bool Archieved { get; set; }
+        public bool Archieved { get; set; } = false;
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
 

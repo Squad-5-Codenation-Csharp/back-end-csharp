@@ -27,7 +27,6 @@ namespace CentralDeErros.Controllers
 
 
         [HttpGet]
-
         public ActionResult<IList<UserResponseModel>> GetAll()
         {
             var UserList = service.GetAll();

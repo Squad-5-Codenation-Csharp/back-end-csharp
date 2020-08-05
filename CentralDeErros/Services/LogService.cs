@@ -7,38 +7,13 @@ using System.Threading.Tasks;
 
 namespace CentralDeErros.Services
 {
-    public class LogService : ILogService
+    public class LogService : BaseService<Log>, ILogService
     {
         private readonly ILogRepository repository;
 
-        public LogService(ILogRepository repository)
+        public LogService(ILogRepository repository): base(repository)
         {
             this.repository = repository;
-        }
-
-        public IList<Log> GetAll()
-        {
-            var LogList = repository.GetAll();
-
-            return LogList;
-        }
-
-        public Log GetById(int id)
-        {
-            var log = repository.GetById(id);
-
-            return log;
-        }
-
-        public int Save(Log log)
-        {
-            var createdLog = repository.Save(log);
-            return createdLog.Id;
-        }
-
-        public void Update(Log log)
-        {
-            repository.Update(log);
         }
     }
 }

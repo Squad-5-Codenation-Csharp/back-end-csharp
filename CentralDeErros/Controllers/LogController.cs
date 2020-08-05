@@ -33,6 +33,15 @@ namespace CentralDeErros.Controllers
             return Ok(mapper.Map<IList<LogResponseModel>>(logList));
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<LogResponseModel> GetById(int id)
+        {
+            var log = service.GetById(id);
+
+            return Ok(mapper.Map<LogResponseModel>(log));
+        }
+
         [HttpPost]
         public ActionResult<int> Post([FromBody] CreateLogRequestValidation log)
         {

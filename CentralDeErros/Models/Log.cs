@@ -20,6 +20,8 @@ namespace CentralDeErros.Api.Models
 
         public bool Archieved { get; set; } = false;
 
+        public bool Active { get; set; } = true;
+
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public int UserId { get; set; }

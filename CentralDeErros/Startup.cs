@@ -42,6 +42,7 @@ namespace CentralDeErros
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<CentralDeErrosApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CentralDeErrosApiContext")));
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +52,15 @@ namespace CentralDeErros
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+
+            app.UseDeveloperExceptionPage();
+
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("./v1/swagger.json", "Central de Erros API");
+            });
 
             app.UseHttpsRedirection();
 

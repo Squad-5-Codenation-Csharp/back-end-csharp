@@ -20,7 +20,7 @@ namespace CentralDeErros.Data.Repository
 
         List<T> IBaseRepository<T>.GetAll()
         {
-            return context.Set<T>().ToList();
+            return context.Set<T>().Where(item => item.Active == true).ToList();
         }
 
         T IBaseRepository<T>.GetById(int id)

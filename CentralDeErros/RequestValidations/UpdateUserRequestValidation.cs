@@ -15,6 +15,6 @@ namespace CentralDeErros.RequestValidations
 
         public string Email { get; set; }
 
-        public Boolean Status { get; set; }
+        public bool Active { get; set; }
     }
 }

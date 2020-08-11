@@ -10,11 +10,21 @@ namespace CentralDeErros.Services
 {
     public class UserService : BaseService<User>, IUserService
     {
+        private readonly IAuthService authService;
 
-        public UserService(IUserRepository repository): base(repository)
+        public UserService(IUserRepository repository, IAuthService authService): base(repository)
         {
+            this.authService = authService;
         }
 
+        public new int Save(User user)
+        {
+            user.Password = authService.Hash(user.Password);
+            
+            var createdUser= _repository.Save(user);
+            
+            return createdUser.Id;
+        }
 
         public new void Update(User user)
         {

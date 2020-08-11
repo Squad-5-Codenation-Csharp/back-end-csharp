@@ -19,7 +19,5 @@ namespace CentralDeErros.Api.Models
         public bool Active { get; set; } = true;
 
         public DateTime RegisterDate { get; set; } = DateTime.Now;
-
-        public Session Session { get; set; }
     }
 }

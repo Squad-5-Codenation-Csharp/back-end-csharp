@@ -39,6 +39,7 @@ namespace CentralDeErros
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<CentralDeErrosApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CentralDeErrosApiContext")));

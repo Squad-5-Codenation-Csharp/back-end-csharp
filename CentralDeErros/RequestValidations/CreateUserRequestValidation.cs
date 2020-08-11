@@ -12,6 +12,7 @@ namespace CentralDeErros.RequestValidations
         public string Name { get; set; }
 
         [Required(ErrorMessage = "É necessário informar o email do usuário")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "É necessário informar a senha do usuário")]

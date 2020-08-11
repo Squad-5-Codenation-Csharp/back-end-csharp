@@ -9,12 +9,18 @@ namespace CentralDeErros.Api.Data
 {
     public class CentralDeErrosApiContext : DbContext
     {
-        public CentralDeErrosApiContext (DbContextOptions<CentralDeErrosApiContext> options)
-            : base(options)
+        public DbSet<User> User { get; set; }
+        public DbSet<Log> Log { get; set; }
+
+        public CentralDeErrosApiContext (DbContextOptions<CentralDeErrosApiContext> options) : base(options)
         {
         }
 
-        public DbSet<User> User { get; set; }
-        public DbSet<Log> Log { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(b => b.Email)
+                .IsUnique();
+        }
     }
 }

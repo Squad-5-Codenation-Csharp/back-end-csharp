@@ -75,7 +75,7 @@ namespace CentralDeErros.Services
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Email, user.Email)
                 }),
-                Expires = DateTime.Now.AddHours(Variables.TokenExpireTime),
+                Expires = DateTime.UtcNow.AddHours(Variables.TokenExpireTime),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature)

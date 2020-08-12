@@ -7,6 +7,7 @@ using CentralDeErros.Api.Models;
 using CentralDeErros.RequestValidations;
 using CentralDeErros.ResponseModel;
 using CentralDeErros.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace CentralDeErros.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private IUserService service;
@@ -45,6 +47,7 @@ namespace CentralDeErros.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult<int> Post([FromBody] CreateUserRequestValidation user)
         {
             var UserId = service.Save(mapper.Map<User>(user));
@@ -58,6 +61,16 @@ namespace CentralDeErros.Controllers
             service.Update(mapper.Map<User>(user));
 
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public ActionResult<bool> Login([FromBody] LoginUserRequestValidation userParams)
+        {
+            var result = service.Login(userParams.Email, userParams.Password);
+
+            return Ok(result);
         }
     }
 }

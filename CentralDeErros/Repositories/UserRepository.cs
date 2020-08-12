@@ -12,7 +12,11 @@ namespace CentralDeErros.Repositories
     {
         public UserRepository(CentralDeErrosApiContext context) : base(context)
         {
+        }
 
+        public User GetUserByEmail(string email)
+        {
+            return context.User.FirstOrDefault(user => user.Email == email);
         }
     }
 }

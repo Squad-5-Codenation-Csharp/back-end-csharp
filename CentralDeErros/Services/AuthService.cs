@@ -32,5 +32,31 @@ namespace CentralDeErros.Services
 
             return salt;
         }
+
+        public (bool Verified, bool NeedsUpgrade) ComparePassword(string hashedPassword, string Password)
+        {
+            var parts = hashedPassword.Split('.', 3);
+
+            if (parts.Length != 3)
+            {
+                throw new FormatException("Hash no formato incorreto. Favor contatar um administrador.");
+            }
+
+            var iterations = Convert.ToInt32(parts[0]);
+            var salt = Convert.FromBase64String(parts[1]);
+            var key = Convert.FromBase64String(parts[2]);
+
+            var needsUpgrade = iterations != IterationCount;
+
+            var verified = KeyDerivation.Pbkdf2(
+                Password,
+                salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: iterations,
+                numBytesRequested: 256 / 8
+            ).SequenceEqual(key);
+            
+            return (verified, needsUpgrade);
+        }
     }
 }

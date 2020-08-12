@@ -11,10 +11,12 @@ namespace CentralDeErros.Services
     public class UserService : BaseService<User>, IUserService
     {
         private readonly IAuthService authService;
+        private readonly IUserRepository repository;
 
         public UserService(IUserRepository repository, IAuthService authService): base(repository)
         {
             this.authService = authService;
+            this.repository = repository;
         }
 
         public new int Save(User user)
@@ -38,6 +40,35 @@ namespace CentralDeErros.Services
                 getUser.Email = user.Email;
 
             _repository.Update(getUser);
+        }
+
+        public object Login(string email, string password)
+        {
+            var user = GetUserByEmail(email);
+
+            (bool ValidPassword, bool NeedUpgrade) = authService.ComparePassword(user.Password, password);
+
+            if (!ValidPassword)
+                throw new ArgumentException("Senha inválida para o usuário informado");
+            else if (ValidPassword && NeedUpgrade)
+                throw new InvalidOperationException("A senha precisa ser atualizada");
+
+            var token = authService.Authenticate(user);
+
+            user.Password = "";
+
+            return new
+            {
+                user,
+                token
+            };
+        }
+
+        private User GetUserByEmail(string email)
+        {
+            var user = repository.GetUserByEmail(email);
+
+            return user;
         }
     }
 }

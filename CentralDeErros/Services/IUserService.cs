@@ -17,5 +17,7 @@ namespace CentralDeErros.Services
 
         public void Update(User user);
 
+        public object Login(string email, string password);
+
     }
 }

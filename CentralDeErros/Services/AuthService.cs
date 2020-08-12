@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using CentralDeErros.Api.Models;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using System.Text;
+using CentralDeErros.Infrastructure;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace CentralDeErros.Services
 {
@@ -57,6 +63,27 @@ namespace CentralDeErros.Services
             ).SequenceEqual(key);
             
             return (verified, needsUpgrade);
+        }
+
+        public string Authenticate(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(Variables.JwtKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[] {
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Email, user.Email)
+                }),
+                Expires = DateTime.Now.AddHours(Variables.TokenExpireTime),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }

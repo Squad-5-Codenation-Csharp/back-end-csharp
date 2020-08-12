@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CentralDeErros.Api.Models;
 
 namespace CentralDeErros.Services
 {
@@ -10,5 +7,7 @@ namespace CentralDeErros.Services
         string Hash(string password);
 
         public (bool Verified, bool NeedsUpgrade) ComparePassword(string hashedPassword, string Password);
+
+        public string Authenticate(User user);
     }
 }

@@ -22,6 +22,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Runtime.InteropServices;
+using CentralDeErros.Business.Middlewares;
 
 namespace CentralDeErros
 {
@@ -89,6 +90,8 @@ namespace CentralDeErros
             });
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware(typeof(ErrorHandler));
 
             app.UseRouting();
 

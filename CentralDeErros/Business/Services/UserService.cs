@@ -1,6 +1,8 @@
 ﻿using CentralDeErros.Api.Models;
+using CentralDeErros.Business.Utils;
 using CentralDeErros.Data.Interfaces;
 using CentralDeErros.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +25,16 @@ namespace CentralDeErros.Services
         {
             user.Password = authService.Hash(user.Password);
             
-            var createdUser= _repository.Save(user);
+            try
+            {
+                var createdUser= _repository.Save(user);
+                return createdUser.Id;
+
+            } catch (DbUpdateException)
+            {
+                throw new DuplicatedEntity($"Erro ao inserir novo usuário: já existe uma entrada com um ou mais atributos informados");
+            }
             
-            return createdUser.Id;
         }
 
         public new void Update(User user)
@@ -67,6 +76,9 @@ namespace CentralDeErros.Services
         private User GetUserByEmail(string email)
         {
             var user = repository.GetUserByEmail(email);
+
+            if (user == null)
+                throw new NotFoundException("Nenhum usuário encontrado para o email informado");
 
             return user;
         }

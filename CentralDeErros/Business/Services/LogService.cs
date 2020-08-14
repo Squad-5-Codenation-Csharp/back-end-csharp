@@ -9,11 +9,9 @@ namespace CentralDeErros.Services
 {
     public class LogService : BaseService<Log>, ILogService
     {
-        private readonly ILogRepository repository;
 
         public LogService(ILogRepository repository): base(repository)
         {
-            this.repository = repository;
         }
     }
 }

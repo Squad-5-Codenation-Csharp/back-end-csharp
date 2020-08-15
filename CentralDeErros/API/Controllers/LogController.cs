@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using CentralDeErros.Api.Models;
 using CentralDeErros.RequestValidations;
 using CentralDeErros.ResponseModel;
 using CentralDeErros.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralDeErros.Controllers
@@ -26,9 +22,9 @@ namespace CentralDeErros.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IList<LogResponseModel>> GetAll()
+        public ActionResult<IList<LogResponseModel>> GetAll([FromQuery] string? env, [FromQuery] string? type)
         {
-            var logList = service.GetAll();
+            var logList = service.GetAll(env, type);
 
             return Ok(mapper.Map<IList<LogResponseModel>>(logList));
         }
@@ -48,6 +44,15 @@ namespace CentralDeErros.Controllers
             var UserId = service.Save(mapper.Map<Log>(log));
 
             return Ok(UserId);
+        }
+
+        [HttpGet]
+        [Route("distribuition")]
+        public ActionResult<IList<dynamic>> LogDistribuition([FromQuery] string? env)
+        {
+            var logDistribuition = service.GetLogsDistribuition(env);
+
+            return Ok(logDistribuition);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace CentralDeErros.Services
 
             if (!ValidPassword)
                 throw new ArgumentException("Senha inválida para o usuário informado");
-            else if (ValidPassword && NeedUpgrade)
+            if (ValidPassword && NeedUpgrade)
                 throw new InvalidOperationException("A senha precisa ser atualizada");
 
             var token = authService.Authenticate(user);

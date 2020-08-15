@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using CentralDeErros.Api.Models;
+using CentralDeErros.Business.Models;
 using CentralDeErros.RequestValidations;
 using CentralDeErros.ResponseModel;
 using CentralDeErros.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralDeErros.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LogController : ControllerBase
     {
         private ILogService service;
@@ -48,7 +51,7 @@ namespace CentralDeErros.Controllers
 
         [HttpGet]
         [Route("distribuition")]
-        public ActionResult<IList<dynamic>> LogDistribuition([FromQuery] string? env)
+        public ActionResult<IList<LogDistribuition>> LogDistribuition([FromQuery] string? env)
         {
             var logDistribuition = service.GetLogsDistribuition(env);
 

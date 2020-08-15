@@ -49,7 +49,7 @@ namespace CentralDeErros.Business.Middlewares
                 status = 409;
 
             var result = JsonSerializer.Serialize(new { 
-                error = typeof(DuplicateNameException).Name,
+                error = exceptionType.Name,
                 statusCode = status,
                 message
             });

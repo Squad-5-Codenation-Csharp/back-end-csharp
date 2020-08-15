@@ -22,9 +22,9 @@ namespace CentralDeErros.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IList<LogResponseModel>> GetAll([FromQuery] string? env, [FromQuery] string? type)
+        public ActionResult<IList<LogResponseModel>> GetAll([FromQuery] string? env, [FromQuery] string? type, [FromQuery] int? userId)
         {
-            var logList = service.GetAll(env, type);
+            var logList = service.GetAll(env, type, userId);
 
             return Ok(mapper.Map<IList<LogResponseModel>>(logList));
         }

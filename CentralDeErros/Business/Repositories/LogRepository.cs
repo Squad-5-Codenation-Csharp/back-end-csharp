@@ -27,10 +27,11 @@ namespace CentralDeErros.Data.Repository
                 .ToArray();
         }
 
-        public List<Log> GetAll(string? env, string? type)
+        public List<Log> GetAll(string? env, string? type, int? userId)
         {
             return context.Log
                 .Where(x => 
+                    (userId != null? x.UserId == userId : true) &&
                     (env != null ? x.Environment == env : true) && 
                     (type != null ? x.Type == type : true) &&
                     x.Active == true)

@@ -18,9 +18,9 @@ namespace CentralDeErros.Services
             this.repository = repository;
         }
 
-        public IList<Log> GetAll(string? env, string? type)
+        public IList<Log> GetAll(string? env, string? type, int? userId)
         {
-            var logList = repository.GetAll(env, type);
+            var logList = repository.GetAll(env, type, userId);
 
             if (logList.Count == 0)
                 throw new NotFoundException("Nenhum log encontrado");

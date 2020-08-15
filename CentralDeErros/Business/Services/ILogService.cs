@@ -9,7 +9,7 @@ namespace CentralDeErros.Services
 {
     public interface ILogService
     {
-        public IList<Log> GetAll(string? env, string? type);
+        public IList<Log> GetAll(string? env, string? type, int? userId);
 
         public Log GetById(int id);
 

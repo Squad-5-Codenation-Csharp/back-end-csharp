@@ -11,7 +11,7 @@ namespace CentralDeErros.Data.Interfaces
     {
         public IList<LogDistribuition> GetLogDistribuition(string? env);
 
-        public List<Log> GetAll(string? env, string? type);
+        public List<Log> GetAll(string? env, string? type, int? userId);
     }
 
 }

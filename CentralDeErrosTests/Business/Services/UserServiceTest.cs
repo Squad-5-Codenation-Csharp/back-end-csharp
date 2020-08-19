@@ -133,31 +133,30 @@ namespace CentralDeErrosTests.Business.Services
                 Active = false
             };
 
-            var UserToUpdate = new User()
+            var userUpdated = new User()
             {
                 Id = 1,
-                Name = "nome antigo",
+                Name = "New name",
                 Email = "teste4@teste.com",
                 Active = true,
                 Password = "hashed.password.key"
             };
 
-            var userId = 1;
-
             var repositoryMock = new Mock<IUserRepository>();
-
-            repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(UserToUpdate);
 
             repositoryMock.Setup(x => x.Update(It.IsAny<User>())).Callback(() =>
             {
-                UserToUpdate.Name = user.Name;
-                UserToUpdate.Active = user.Active;
-            }).Returns(UserToUpdate);
+                user.Name = "New name";
 
+            }).Returns(user);
 
-            var userService = new UserService(repositoryMock.Object, new AuthService());
-            
-            userService.Update(user);
+            repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(userUpdated);
+
+            var logService = new UserService(repositoryMock.Object, new AuthService());
+
+            logService.Update(user);
+
+            Assert.Equal("New name", user.Name);
         }
 
         [Fact]

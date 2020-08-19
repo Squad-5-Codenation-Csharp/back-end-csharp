@@ -41,5 +41,47 @@ namespace CentralDeErrosTests.API.Controllers
             Assert.Equal(200, result.StatusCode);
         }
 
+
+        [Fact]
+        public void shoud_get_all_logs()
+        {
+            var logServiceMock = new Mock<ILogService>();
+            var mapperMock = new Mock<IMapper>();
+
+            var logList = new List<Log>()
+            {
+                new Log()
+                {
+                Id = 1,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+                },
+                new Log()
+                {
+                Id = 2,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Dev",
+                UserId = 2
+                }
+            };
+
+            logServiceMock.Setup(x => x.GetAll(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<int?>())).Returns(logList);
+
+            var logController = new LogController(logServiceMock.Object, mapperMock.Object);
+
+            var expectedLogList = logController.GetAll(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<int?>());
+
+            var result = expectedLogList.Result as OkObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(200, result.StatusCode);
+        }
+
+        
     }
 }

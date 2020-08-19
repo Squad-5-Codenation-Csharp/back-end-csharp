@@ -182,5 +182,92 @@ namespace CentralDeErrosTests.Business.Services
 
             Assert.Equal(createdLogId, logId);
         }
+
+        [Fact]
+        public void shoud_fail_when_create_log()
+        {
+            var log = new Log()
+            {
+                Id = 1,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            var repositoryMock = new Mock<ILogRepository>();
+
+            repositoryMock.Setup(x => x.Save(It.IsAny<Log>())).Throws(new DuplicatedEntity("Erro ao inserir novo Log: já existe uma entrada com um ou mais atributos informados"));
+
+            var logService = new LogService(repositoryMock.Object);
+
+            Assert.Throws<DuplicatedEntity>(() => logService.Save(log));
+        }
+
+        [Fact]
+        public void shoud_correctly_update_log()
+        {
+            var log = new Log()
+            {
+                Id = 1,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            var logUpdated = new Log()
+            {
+                Id = 1,
+                Name = "Log_Name_Update",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            var repositoryMock = new Mock<ILogRepository>();
+
+            repositoryMock.Setup(x => x.Update(It.IsAny<Log>())).Callback(() =>
+            {
+                log.Name = "Log_Name_Update";
+                log.Description = "Log_Description";
+
+            }).Returns(log);
+
+            repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(logUpdated);
+
+            var logService = new LogService(repositoryMock.Object);
+
+            logService.Update(log);
+
+            Assert.Equal("Log_Name_Update", logUpdated.Name);
+        }
+
+        [Fact]
+        public void shoud_fail_when_log_doesnt_exists_update_log()
+        {
+            var log = new Log()
+            {
+                Id = 1,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            Log logNull = null;
+
+            var repositoryMock = new Mock<ILogRepository>();
+
+            repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(logNull);
+
+            var logService = new LogService(repositoryMock.Object);
+
+            Assert.Throws<NotFoundException>(() => logService.Update(log));
+        }
     }
 }

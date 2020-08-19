@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CentralDeErros.Api.Models;
 using CentralDeErros.Controllers;
+using CentralDeErros.RequestValidations;
 using CentralDeErros.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -82,6 +83,45 @@ namespace CentralDeErrosTests.API.Controllers
             Assert.Equal(200, result.StatusCode);
         }
 
-        
+
+        [Fact]
+        public void shoud_post_log()
+        {
+            var logServiceMock = new Mock<ILogService>();
+            var mapperMock = new Mock<IMapper>();
+
+            var log  = new Log()
+            {
+                Id = 1,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            var logToBeCreated = new CreateLogRequestValidation()
+            {
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            var logId = 1;
+
+            logServiceMock.Setup(x => x.Save(log)).Returns(logId);
+
+            var logController = new LogController(logServiceMock.Object, mapperMock.Object);
+
+            var posted = logController.Post(logToBeCreated);
+
+            var result = posted.Result as OkObjectResult;
+
+            Assert.NotNull(posted);
+            Assert.Equal(200, result.StatusCode);
+            Assert.Equal(logId, result.Value);
+        }
     }
 }

@@ -5,6 +5,7 @@ using CentralDeErros.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -44,6 +45,78 @@ namespace CentralDeErrosTests.Business.Services
             var expectedLogList = logService.GetAll();
 
             Assert.Equal(expectedLogList, logList);
+        }
+
+        [Fact]
+        public void shoud_get_all_logs_with_env()
+        {
+            var repositoryMock = new Mock<ILogRepository>();
+
+            var env = "dev";
+
+            var logList = new List<Log>()
+            {
+                new Log()
+                {
+                    Name = "teste",
+                    Description = "falha crítica",
+                    Environment = "prod",
+                    Type = "LoginError",
+                    UserId = 1
+                },
+                new Log()
+                {
+                    Name = "teste",
+                    Description = "falha crítica",
+                    Environment = "dev",
+                    Type = "LoginError",
+                    UserId = 1
+                },
+            };
+
+            repositoryMock.Setup(x => x.GetAll(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<int?>())).Returns(logList.Where(x => x.Environment == "dev").ToList());
+
+            var logService = new LogService(repositoryMock.Object);
+
+            var expectedLogList = logService.GetAll(env, null, null);
+
+            Assert.Equal(1, expectedLogList.Count);
+        }
+
+        [Fact]
+        public void shoud_get_all_logs_with_type()
+        {
+            var repositoryMock = new Mock<ILogRepository>();
+
+            var type = "LoginError";
+
+            var logList = new List<Log>()
+            {
+                new Log()
+                {
+                    Name = "teste",
+                    Description = "falha crítica",
+                    Environment = "prod",
+                    Type = "LoginError",
+                    UserId = 1
+                },
+                new Log()
+                {
+                    Name = "teste",
+                    Description = "falha crítica",
+                    Environment = "dev",
+                    Type = "AuthError",
+                    UserId = 1
+                },
+            };
+
+            repositoryMock.Setup(x => x.GetAll(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<int?>())).Returns(logList.Where(x => x.Type == "LoginError").ToList());
+
+            var logService = new LogService(repositoryMock.Object);
+
+            var expectedLogList = logService.GetAll(null, type, null);
+
+            Assert.Equal(1, expectedLogList.Count);
         }
 
         [Fact]

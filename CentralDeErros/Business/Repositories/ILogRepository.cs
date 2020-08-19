@@ -9,9 +9,9 @@ namespace CentralDeErros.Data.Interfaces
 {
     public interface ILogRepository : IBaseRepository<Log>
     {
-        public IList<LogDistribuition> GetLogDistribuition(string? env);
+        public IList<LogDistribuition> GetLogDistribuition(string env);
 
-        public List<Log> GetAll(string? env, string? type, int? userId);
+        public List<Log> GetAll(string env, string type, int? userId);
     }
 
 }

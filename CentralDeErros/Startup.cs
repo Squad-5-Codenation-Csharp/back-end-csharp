@@ -47,9 +47,11 @@ namespace CentralDeErros
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<CentralDeErrosApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CentralDeErrosApiContextProd")));
             services.BuildServiceProvider().GetService<CentralDeErrosApiContext>().Database.Migrate();
+
             services.AddSwaggerGen();
 
             var key = Encoding.ASCII.GetBytes(Variables.JwtKey);

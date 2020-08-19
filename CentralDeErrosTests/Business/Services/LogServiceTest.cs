@@ -153,5 +153,34 @@ namespace CentralDeErrosTests.Business.Services
 
             Assert.Throws<NotFoundException>(() => logService.GetById(1));
         }
+
+        [Fact]
+        public void shoud_correctly_create_log()
+        {
+            var log = new Log()
+            {
+                Id = 1,
+                Name = "Log_Name",
+                Description = "Log_Description",
+                Environment = "dev",
+                Type = "Error",
+                UserId = 1
+            };
+
+            var logId = 1;
+
+            var repositoryMock = new Mock<ILogRepository>();
+
+            repositoryMock.Setup(x => x.Save(It.IsAny<Log>())).Callback(() =>
+            {
+                log.Id = logId;
+            }).Returns(log);
+
+
+            var logService = new LogService(repositoryMock.Object);
+            var createdLogId = logService.Save(log);
+
+            Assert.Equal(createdLogId, logId);
+        }
     }
 }

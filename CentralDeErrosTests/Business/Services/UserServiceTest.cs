@@ -15,7 +15,7 @@ namespace CentralDeErrosTests.Business.Services
     {
 
         [Fact]
-        public void shoud_get_all_users()
+        public void should_get_all_users()
         {
             var repositoryMock = new Mock<IUserRepository>();
             var authrepositoryMock = new Mock<IAuthService>();
@@ -44,7 +44,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_get_user_by_id()
+        public void should_get_user_by_id()
         {
             var repositoryMock = new Mock<IUserRepository>();
             var authrepositoryMock = new Mock<IAuthService>();
@@ -66,7 +66,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_when_user_doesnt_exists_get_user_by_id()
+        public void should_fail_when_user_doesnt_exists_get_user_by_id()
         {
             var repositoryMock = new Mock<IUserRepository>();
             var authrepositoryMock = new Mock<IAuthService>();
@@ -79,7 +79,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_correctly_create_user()
+        public void should_correctly_create_user()
         {
             var user = new User()
             {
@@ -105,7 +105,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_when_create_user()
+        public void should_fail_when_create_user()
         {
             var user = new User()
             {
@@ -124,7 +124,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_correctly_update_user()
+        public void should_correctly_update_user()
         {
             var user = new User()
             {
@@ -160,7 +160,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_when_user_doesnt_exists_update_user()
+        public void should_fail_when_user_doesnt_exists_update_user()
         {
             var user = new User()
             {
@@ -181,7 +181,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_because_cannot_get_user_by_email_login_user()
+        public void should_fail_because_cannot_get_user_by_email_login_user()
         {
             var userEmail = "teste4@teste.com";
             var userPassword = "password";
@@ -200,7 +200,7 @@ namespace CentralDeErrosTests.Business.Services
 
 
         [Fact]
-        public void shoud_fail_because_password_upgrade_login_user()
+        public void should_fail_because_password_upgrade_login_user()
         {
             var userEmail = "teste4@teste.com";
             var userPassword = "password";
@@ -226,7 +226,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_because_password_error_login_user()
+        public void should_fail_because_password_error_login_user()
         {
             var userEmail = "teste4@teste.com";
             var userPassword = "password";
@@ -252,7 +252,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_login_user()
+        public void should_login_user()
         {
             var userEmail = "teste4@teste.com";
             var userPassword = "password";

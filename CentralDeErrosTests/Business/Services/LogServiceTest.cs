@@ -1,4 +1,5 @@
 ﻿using CentralDeErros.Api.Models;
+using CentralDeErros.Business.Models;
 using CentralDeErros.Business.Utils;
 using CentralDeErros.Data.Interfaces;
 using CentralDeErros.Services;
@@ -14,7 +15,7 @@ namespace CentralDeErrosTests.Business.Services
     public class LogServiceTest
     {
         [Fact]
-        public void shoud_get_all_logs()
+        public void should_get_all_logs()
         {
             var repositoryMock = new Mock<ILogRepository>();
 
@@ -48,7 +49,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_get_all_logs_with_env()
+        public void should_get_all_logs_with_env()
         {
             var repositoryMock = new Mock<ILogRepository>();
 
@@ -84,7 +85,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_get_all_logs_with_type()
+        public void should_get_all_logs_with_type()
         {
             var repositoryMock = new Mock<ILogRepository>();
 
@@ -120,7 +121,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_get_log_by_id()
+        public void should_get_log_by_id()
         {
             var repositoryMock = new Mock<ILogRepository>();
 
@@ -143,7 +144,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_when_log_doesnt_exists_get_user_by_id()
+        public void should_fail_when_log_doesnt_exists_get_user_by_id()
         {
             var repositoryMock = new Mock<ILogRepository>();
 
@@ -155,7 +156,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_correctly_create_log()
+        public void should_correctly_create_log()
         {
             var log = new Log()
             {
@@ -184,7 +185,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_when_create_log()
+        public void should_fail_when_create_log()
         {
             var log = new Log()
             {
@@ -206,7 +207,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_correctly_update_log()
+        public void should_correctly_update_log()
         {
             var log = new Log()
             {
@@ -247,7 +248,7 @@ namespace CentralDeErrosTests.Business.Services
         }
 
         [Fact]
-        public void shoud_fail_when_log_doesnt_exists_update_log()
+        public void should_fail_when_log_doesnt_exists_update_log()
         {
             var log = new Log()
             {
@@ -268,6 +269,33 @@ namespace CentralDeErrosTests.Business.Services
             var logService = new LogService(repositoryMock.Object);
 
             Assert.Throws<NotFoundException>(() => logService.Update(log));
+        }
+
+        [Fact]
+        public void should_get_log_statistics()
+        {
+            var repositoryMock = new Mock<ILogRepository>();
+
+            var logDistribuition = new List<LogDistribuition>(){
+                new LogDistribuition()
+                {
+                    Env = "Dev",
+                    Count = 5
+                },
+                new LogDistribuition()
+                {
+                    Env = "Prod",
+                    Count = 6
+                }
+            };
+
+            repositoryMock.Setup(x => x.GetLogDistribuition(It.IsAny<string>())).Returns(logDistribuition);
+
+            var logService = new LogService(repositoryMock.Object);
+
+            var expectedLogList = logService.GetLogsDistribuition(It.IsAny<string>());
+
+            Assert.Equal(logDistribuition, expectedLogList);
         }
     }
 }

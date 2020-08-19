@@ -237,7 +237,7 @@ namespace CentralDeErrosTests.Business.Services
 
             }).Returns(log);
 
-            repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(logUpdated);
+            repositoryMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(log);
 
             var logService = new LogService(repositoryMock.Object);
 

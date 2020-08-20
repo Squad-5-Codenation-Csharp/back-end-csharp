@@ -28,6 +28,32 @@ namespace CentralDeErros.Services
             return logList;
         }
 
+        public new void Update(Log log)
+        {
+            var getLog = GetById(log.Id);
+
+            if (log.Name != getLog.Name)
+                getLog.Name = log.Name;
+
+            if (log.Description != getLog.Description)
+                getLog.Description = log.Description;
+
+            if (log.Environment != getLog.Environment)
+                getLog.Environment = log.Environment;
+
+            if (log.Type != getLog.Type)
+                getLog.Type = log.Type;
+
+            if (log.Archieved != getLog.Archieved)
+                getLog.Archieved = log.Archieved;
+
+            if (log.Active != getLog.Active)
+                getLog.Active = log.Active;
+
+
+            _repository.Update(getLog);
+        }
+
         public IList<LogDistribuition> GetLogsDistribuition(string? env)
         {
             var logDistribuition = repository.GetLogDistribuition(env);

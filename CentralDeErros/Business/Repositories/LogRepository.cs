@@ -27,7 +27,7 @@ namespace CentralDeErros.Data.Repository
                 .ToArray();
         }
 
-        public List<Log> GetAll(string? env, string? type, int? userId)
+        public List<Log> GetAll(string env, string type, int? userId)
         {
             return context.Log
                 .Where(x => 

@@ -90,15 +90,6 @@ namespace CentralDeErrosTests.API.Controllers
             var logServiceMock = new Mock<ILogService>();
             var mapperMock = new Mock<IMapper>();
 
-            var log  = new Log()
-            {
-                Id = 1,
-                Name = "Log_Name",
-                Description = "Log_Description",
-                Environment = "dev",
-                Type = "Error",
-                UserId = 1
-            };
 
             var logToBeCreated = new CreateLogRequestValidation()
             {
@@ -111,7 +102,7 @@ namespace CentralDeErrosTests.API.Controllers
 
             var logId = 1;
 
-            logServiceMock.Setup(x => x.Save(log)).Returns(logId);
+            logServiceMock.Setup(x => x.Save(It.IsAny<Log>())).Returns(logId);
 
             var logController = new LogController(logServiceMock.Object, mapperMock.Object);
 

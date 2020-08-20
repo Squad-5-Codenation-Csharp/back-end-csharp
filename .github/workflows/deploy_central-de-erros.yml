@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - central-de-erros
 on:
   push:
     branches:
-      - deploy
+      - master
 
 jobs:
   build-and-deploy:

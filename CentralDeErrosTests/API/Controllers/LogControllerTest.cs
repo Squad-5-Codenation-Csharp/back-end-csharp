@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CentralDeErros.Api.Models;
+using CentralDeErros.Business.Models;
 using CentralDeErros.Controllers;
 using CentralDeErros.RequestValidations;
 using CentralDeErros.Services;
@@ -113,6 +114,38 @@ namespace CentralDeErrosTests.API.Controllers
             Assert.NotNull(posted);
             Assert.Equal(200, result.StatusCode);
             Assert.Equal(logId, result.Value);
+        }
+
+        [Fact]
+        public void shoud_get_all_logs_distribuition()
+        {
+            var logServiceMock = new Mock<ILogService>();
+            var mapperMock = new Mock<IMapper>();
+
+            var logDistribuitionList = new List<LogDistribuition>()
+            {
+                new LogDistribuition()
+                {
+                    Env = "Prod",
+                    Count = 2
+                },
+                new LogDistribuition()
+                {
+                    Env = "Dev",
+                    Count = 6
+                }
+            };
+
+            logServiceMock.Setup(x => x.GetLogsDistribuition(It.IsAny<string?>())).Returns(logDistribuitionList);
+
+            var logController = new LogController(logServiceMock.Object, mapperMock.Object);
+
+            var expectedLogDistribuitionList = logController.GetAll(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<int?>());
+
+            var result = expectedLogDistribuitionList.Result as OkObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(200, result.StatusCode);
         }
     }
 }
